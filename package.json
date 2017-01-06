@@ -1,6 +1,20 @@
 {
     "name": "jScrolly",
+    "title": "jScrolly.js",
+    "description": "Simple dependency-free javascript carousel slider plugin",
     "version": "1.0.0",
+    "license": "MIT",
+    "author": {
+        "name": "Robert Velickovski",
+        "email": "roby@rvdizajn.com"
+    },
+    "keywords": [
+        "slider",
+        "carousel",
+        "vanilla",
+        "simple",
+        "thumbnail"
+    ],
     "devDependencies": {
         "grunt": "^1.0.1",
         "grunt-contrib-concat": "^1.0.1",

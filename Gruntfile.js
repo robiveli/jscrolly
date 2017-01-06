@@ -1,4 +1,3 @@
-
 module.exports = function(grunt) {
 
     grunt.initConfig({
@@ -28,8 +27,7 @@ module.exports = function(grunt) {
         uglify: {
             my_target: {
                 files: {
-                    '<%= settings.distPath %>js/*.js': '<%= settings.srcPath %>js/*.js'
-
+                    '<%= settings.distPath %>js/jScrolly.js': '<%= settings.srcPath %>js/jScrolly.js'
                 } 
             }
         },
