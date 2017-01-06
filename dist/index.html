@@ -1,32 +1,33 @@
 <!doctype html>
 <html lang='en'>
 <head>
-<title>jScrolly</title>
+<title>* jScrolly - simple dependency-free javascript carousel slider plugin</title>
 <meta charset='utf-8'>
-<meta name='description' content='jScrolly - simple Javascript slider'>
+<meta name='description' content='Simple dependency-free javascript carousel slider plugin'>
 <meta name='robots' content='index, follow'>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
 <link href='css/jScrolly.css' rel='stylesheet' type='text/css'>
 </head>
+
 <style>
 
     /*** DEMO only ***/
 
     html, body {
 
-        background: #ecece9; 
+        background: #ecece9; margin: 0; padding: 0;
 
     }
 
     .jScrolly {
 
-        margin: 0 auto;
+        margin: 20px;
 
     }
 
     .demoBlock {
 
-        float: left; width: 300px; height: 300px; background: #e8d25d; border: 10px solid #fff; border-radius: 2px;
+        float: left; display: block; width: 300px; height: 300px; background: #e8d25d; border: 10px solid #fff; border-radius: 2px;
         font-size: 14px; text-align: center; line-height: 300px; font-family: Arial, Helvetica, sans-serif; color: #9e8f3c; 
         letter-spacing: 1px; text-transform: uppercase; 
 
@@ -39,16 +40,34 @@
     } 
 
 </style>
+
 <body>
 
 <div class="jScrolly">
 
-    <article class="demoBlock"> 
-        Slide One
-    </article>
+    <div class="jContent">
+
+        <article class="demoBlock"> 
+            Slide One
+        </article>
+
+        <article class="demoBlock"> 
+            Slide Two
+        </article>
+
+        <article class="demoBlock"> 
+            Slide Three
+        </article>
+
+        <article class="demoBlock"> 
+            Slide Four
+        </article>
+
+    </div>
         
 </div>
 
 <script src="js/jScrolly.js"></script>
+
 </body>
 </html>
