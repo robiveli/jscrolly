@@ -1,6 +1,8 @@
 
 ;(function jScrolly(){ 
 
+    'use strict';
+
     // Setup
     this.options = {
 
