@@ -32,16 +32,18 @@ module.exports = function(grunt) {
             }
         },
 
-        htmlbuild: {
-            options: {
-                beautify: false,
-                relative: true,
-            },
-            build: {
-                expand: true,
-                cwd: '<%= settings.srcPath %>',
-                src: '**/*.html',
-                dest: '<%= settings.distPath %>'
+        htmlmin: {
+            dist: { 
+              options: {  
+                removeComments: true,
+                collapseWhitespace: true
+              },
+              files: [{
+                    expand: true, 
+                    cwd: '<%= settings.srcPath %>', 
+                    src: ['**/*.html'], 
+                    dest: '<%= settings.distPath %>'
+                }]
             }
         },
 
@@ -64,7 +66,7 @@ module.exports = function(grunt) {
             },
             html: {
                 files: ['<%= settings.srcPath %>*.html'],
-                tasks: ['htmlbuild'],
+                tasks: ['htmlmin'],
                 options: {
                     spawn: false
                 }
@@ -76,6 +78,6 @@ module.exports = function(grunt) {
     require('load-grunt-tasks')(grunt);
 
     grunt.registerTask('default', ['watch']);
-    grunt.registerTask('build', ['sass', 'uglify', 'htmlbuild']);
+    grunt.registerTask('build', ['sass', 'uglify', 'htmlmin']);
 
 };

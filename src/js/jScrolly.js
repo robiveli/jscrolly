@@ -4,7 +4,7 @@
     'use strict';
 
     // Setup
-    this.options = {
+    this.options = { 
 
         '$wrapper' : app.$body.querySelector('.jScrolly'),
         '$item'    : app.$body.querySelector('.jScrolly .action_block')
