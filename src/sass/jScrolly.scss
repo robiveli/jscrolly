@@ -1,6 +1,6 @@
 
-// Import
-@import 'variables';
+// Library
+@import 'library/all';
 
 // Base Styles
 .jScrolly { 
@@ -17,7 +17,7 @@
 
 .jContent {
 
-    
+    position: relative;
     
 }
 
