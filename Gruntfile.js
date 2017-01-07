@@ -7,20 +7,16 @@ module.exports = function(grunt) {
             distPath: 'dist/'
         },
 
-        sass: {
-            app: {
-                files: [{
-                    expand: true,
-                    cwd: '<%= settings.srcPath %>sass',
-                    src: ['**/*.scss'],
-                    dest: '<%= settings.distPath %>css',
-                    ext: '.css'
-                }],
-                options: {
-                    outputStyle: 'compressed',
-                    sourceMap: false,
-                    precision: 5
-                }
+        postcss: {
+            options: {
+                map: false, 
+                processors: [
+                    require('pixrem')(),
+                    require('autoprefixer')({ browsers: 'last 5 versions' })
+                ]
+            },
+            dist: {
+              src: '<%= settings.distPath %>css/*.css'
             }
         },
 
@@ -56,10 +52,10 @@ module.exports = function(grunt) {
                     spawn: false
                 }
             },
-            scss: {
+            postcss: {
                 expand: true,
                 files: ['<%= settings.srcPath %>sass/**/*.scss'],
-                tasks: ['sass'],
+                tasks: ['postcss'],
                 options: {
                     spawn: false
                 }
@@ -78,6 +74,6 @@ module.exports = function(grunt) {
     require('load-grunt-tasks')(grunt);
 
     grunt.registerTask('default', ['watch']);
-    grunt.registerTask('build', ['sass', 'uglify', 'htmlmin']);
+    grunt.registerTask('build', ['postcss', 'uglify', 'htmlmin']);
 
 };

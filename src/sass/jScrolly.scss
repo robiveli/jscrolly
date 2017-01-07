@@ -2,47 +2,43 @@
 // Library
 @import 'library/all';
 
-// Base Styles
+// Base Style
 .jScrolly { 
 
-    overflow: hidden; 
+    overflow-x: scroll; position: relative;
 
-} 
+    > .jPanel { 
 
-.jPanel { 
+        display: none; 
 
-    display: none; 
-
-}
-
-.jContent {
-
-    position: relative;
-    
-}
-
-@media screen and (min-width: $baseBreakpoint) { 
-
-    .jScrolly { 
-
-        transition: all 250ms ease-in-out; 
-        -webkit-transition: all 250ms ease-in-out; 
     }
 
-    .jPanel { 
+    > .jContent {
 
-        display: block; position: absolute; bottom: 0; left: 50%; margin-left: -50px; width: 100px; 
-        z-index: 9; 
+        
+        
+    }
 
-        .jBtn { 
+    @media screen and (min-width: $baseBreakpoint) { 
 
-            float: left; display: block; width: 50px; height: 50px; 
-            background: $baseColor; text-align: center; color: #fff; 
+        transition: all 250ms ease-in-out; 
+
+        > .jPanel { 
+
+            display: block; position: absolute; bottom: 0; left: 50%; 
+
+        }
+
+        .prevBtn,
+        .nextBtn {
+
+            float: left; display: block; width: 5rem; height: 5rem; 
+            background: $baseColor; text-align: center; color: #fff; border: none;
             cursor: pointer; transition: background 150ms ease-in-out;
 
             &:before { 
 
-                line-height: 2.12; 
+                 
 
             }
 
@@ -52,15 +48,8 @@
 
             }
 
-            &:active { 
-
-                &:before { 
-
-                    line-height: 2.2; 
-
-                } 
-
-            }
         }
+
     }
+
 }
