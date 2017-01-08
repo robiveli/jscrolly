@@ -1,5 +1,11 @@
 <!doctype html><html lang="en"><head><title>* jScrolly - simple dependency-free javascript carousel slider plugin</title><meta charset="utf-8"><meta name="description" content="Simple dependency-free javascript carousel slider plugin"><meta name="robots" content="index, follow"><meta name="viewport" content="width=device-width,initial-scale=1"><link href="css/jScrolly.css" rel="stylesheet" type="text/css"></head><style>/*** DEMO only ***/
 
+    html {
+
+        font-size: 62.5%;
+
+    }
+
     html, body { 
 
         background: #ecece9; margin: 0; padding: 0;
@@ -8,14 +14,14 @@
 
     .jScrolly {
 
-        margin: 20px;
+        margin: 20px auto; max-width: 90%;
 
     }
 
     .demoBlock {
 
-        float: left; display: block; width: 300px; height: 300px; background: #e8d25d; border: 10px solid #fff; border-radius: 2px;
-        font-size: 14px; text-align: center; line-height: 300px; font-family: Arial, Helvetica, sans-serif; color: #9e8f3c; 
+        float: left; display: block; width: 460px; height: 280px; background: #e8d25d; 
+        font-size: 14px; text-align: center; line-height: 280px; font-family: Arial, Helvetica, sans-serif; color: #fff; 
         letter-spacing: 1px; text-transform: uppercase; 
 
     }
@@ -24,4 +30,28 @@
 
         margin-left: 20px;    
             
-    }</style><body><div class="jScrolly"><div class="jContent" style="width:1500px"><article class="demoBlock">Slide One</article><article class="demoBlock">Slide Two</article><article class="demoBlock">Slide Three</article><article class="demoBlock">Slide Four</article></div><div class="jPanel"><button class="prevBtn">Prev</button> <button class="nextBtn">Next</button></div></div><script src="js/jScrolly.js"></script></body></html>
+    } 
+
+    .demoBlock:nth-of-type(2) {
+
+        background: #e68585;    
+            
+    } 
+
+    .demoBlock:nth-of-type(3) {
+
+        background: #87d875;   
+            
+    }
+
+    .demoBlock:nth-of-type(4) {
+
+        background: #79aaca;   
+            
+    }
+
+    .demoBlock:nth-of-type(5) {
+
+        background: #b78eb9;   
+            
+    }</style><body><div class="jScrolly"><div class="jContent"><div class="slider" style="width:2600px"><article class="demoBlock">Slide One</article><article class="demoBlock">Slide Two</article><article class="demoBlock">Slide Three</article><article class="demoBlock">Slide Four</article><article class="demoBlock">Slide Five</article></div></div><div class="jPanel"><button class="prevBtn">Prev</button> <button class="nextBtn">Next</button></div></div><script src="js/jScrolly.js"></script></body></html>
