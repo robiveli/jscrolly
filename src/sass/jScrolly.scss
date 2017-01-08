@@ -1,15 +1,15 @@
 
-// Library
+/* Library */
 @import 'library/all';
 
-// Base Style
+/* Base Style */
 .jScrolly { 
 
     overflow-x: scroll; position: relative;
 
-    > .jPanel { 
+    > .jPanel {  
 
-        display: none; 
+        display: none;   
 
     }
 
@@ -21,7 +21,7 @@
 
     @media screen and (min-width: $baseBreakpoint) { 
 
-        transition: all 250ms ease-in-out; 
+        transition: all 250ms ease-in-out;
 
         > .jPanel { 
 
@@ -32,9 +32,9 @@
         .prevBtn,
         .nextBtn {
 
-            float: left; display: block; width: 5rem; height: 5rem; 
+            float: left; display: inline-block; width: 5rem; height: 5rem; box-sizing: border-box;
             background: $baseColor; text-align: center; color: #fff; border: none;
-            cursor: pointer; transition: background 150ms ease-in-out;
+            cursor: pointer; outline: none; transition: background 150ms ease-in-out; 
 
             &:before { 
 

@@ -7,16 +7,33 @@ module.exports = function(grunt) {
             distPath: 'dist/'
         },
 
+        sass: {
+            app: {
+                files: [{
+                    expand: true,
+                    cwd: '<%= settings.srcPath %>sass',
+                    src: ['**/*.scss'],
+                    dest: '<%= settings.distPath %>css',
+                    ext: '.css'
+                }],
+                options: {
+                    outputStyle: 'compressed',
+                    sourceMap: false,
+                    precision: 5
+                }
+            }
+        },
+
         postcss: {
             options: {
                 map: false, 
                 processors: [
-                    require('pixrem')(),
-                    require('autoprefixer')({ browsers: 'last 5 versions' })
+                    require('autoprefixer')({ browsers: 'last 8 versions' })
                 ]
             },
             dist: {
-              src: '<%= settings.distPath %>css/*.css'
+                src: '<%= settings.distPath %>css/jScrolly.css',
+                dest: '<%= settings.distPath %>css/jScrolly.css'
             }
         },
 
@@ -52,10 +69,10 @@ module.exports = function(grunt) {
                     spawn: false
                 }
             },
-            postcss: {
+            css: {
                 expand: true,
                 files: ['<%= settings.srcPath %>sass/**/*.scss'],
-                tasks: ['postcss'],
+                tasks: ['sass', 'postcss'],
                 options: {
                     spawn: false
                 }
@@ -74,6 +91,6 @@ module.exports = function(grunt) {
     require('load-grunt-tasks')(grunt);
 
     grunt.registerTask('default', ['watch']);
-    grunt.registerTask('build', ['postcss', 'uglify', 'htmlmin']);
+    grunt.registerTask('build', ['sass', 'postcss', 'uglify', 'htmlmin']);
 
 };
