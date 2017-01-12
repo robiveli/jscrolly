@@ -21,8 +21,7 @@
             this.$items = this.$slider[0].childNodes;
             this.itemsNum = this.$items.length;
             this.sliderWidth = this.itemsNum * this.$items[0].offsetWidth;
-
-            console.log(this.sliderWidth);
+            this.slideStep = this.$items[0].offsetWidth;
 
             this.setupSlider();
             this.renderUI();
@@ -43,7 +42,11 @@
 
             });
 
-            this.$slider[0].setAttribute('style', 'width:' + Number(this.sliderWidth + offsetAll) + 'px');
+            this.$slider[0].style.width = Number(this.sliderWidth + offsetAll) + 'px';
+            this.$slider[0].style.transform = 'translateX(0px)';
+
+            // TODO - vendor support
+            //this.$slider[0].style.WebkitTransform = 'translate(0px)';
 
         }
 
@@ -56,23 +59,31 @@
 
             this.$el[0].insertAdjacentHTML('beforeend', jPanelTemplate);
 
+            this.eventsSetup();
+
         }
 
-        this.events = function() {
+        this.eventsSetup = function() {
 
-            
-            
+            this.$nextBtn = document.getElementsByClassName('nextBtn');
+            this.$prevBtn = document.getElementsByClassName('prevBtn');
+
+            this.$nextBtn[0].addEventListener('click', this.moveNext.bind(this));
+            this.$prevBtn[0].addEventListener('click', this.movePrev.bind(this));
+
         }
 
         this.moveNext = function() {
 
+            console.log(this.slideStep);
 
+            this.$slider[0].style.transform = 'translateX(-' + this.slideStep + 'px)';
 
         }
 
         this.movePrev = function() {
 
-            
+            this.$slider[0].style.transform = 'translateX(' + this.slideStep + 'px)';
             
         }
 

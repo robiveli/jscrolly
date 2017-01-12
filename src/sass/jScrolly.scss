@@ -21,11 +21,17 @@
 
     @media screen and (min-width: $baseBreakpoint) { 
 
-        transition: all $transitionSpeed ease-in-out;
-
-        > .jContent {
+        > .jContent { 
 
             overflow-x: hidden; padding-bottom: ($btnSize/30) + rem;
+
+            > .slider {
+
+                width: 999rem; /* avoid possible unwanted render effect */
+                
+                transition: all $transitionSpeed ease-in-out;
+            
+            }
             
         }
 
