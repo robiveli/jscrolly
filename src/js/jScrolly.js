@@ -1,68 +1,97 @@
 
-;(function jScrolly(){ 
+;(function() { 
 
     'use strict';
 
-    // Setup
-    this.options = { 
+    var jScrolly = function(options) {
 
-        '$wrapper' : app.$body.querySelector('.jScrolly'),
-        '$item'    : app.$body.querySelector('.jScrolly .action_block')
+        console.log(options);
 
-    };
+        this.options = {
 
-    this.markupUi = app.$window.microjungle([ 
-        ['div', {'class': 'jPanel'},
-            ['a', {'role': 'button', 'title' : 'Prethodna', 'class' : 'jPrev jBtn icon_right_arrow'}],
-            ['a', {'role': 'button', 'title' : 'Sljedeća', 'class' : 'jNext jBtn icon_left_arrow'}]
-        ]
-    ]);
-
-    // Initialize
-    initJscrolly = function() { 
-
-        // Globals
-        var wrapperWidth = this.options.$wrapper.children.length * this.options.$item.offsetWidth;
-        this.options.$wrapper.style.width = wrapperWidth + 'px';
-        this.options.$wrapper.appendChild(this.markupUi);
-
-
-        // Movements
-        moveNext = function() { 
-
-            this.options.$wrapper.style.marginLeft = '-' + (wrapperWidth - this.options.$wrapper.parentElement.offsetWidth) + 'px'; 
+            prev: 'Previous',
+            next: 'Next'
 
         };
 
-        moveRight = function() { 
+        this.init = function() {
 
-            this.options.$wrapper.style.marginLeft = '0px'; 
+            this.$el = document.getElementsByClassName('jScrolly');
+            this.$slider = this.$el[0].getElementsByClassName('slider');
+            this.$items = this.$slider[0].childNodes;
+            this.itemsNum = this.$items.length;
+            this.sliderWidth = this.itemsNum * this.$items[0].offsetWidth;
 
-        };
+            console.log(this.sliderWidth);
 
-        // Events
-        app.$body.querySelector('.jNext').addEventListener('click', function() { 
+            this.setupSlider();
+            this.renderUI();
+
+        }
+
+        this.setupSlider = function() {
+
+            var offsetAll;
+               
+            this.$items.forEach(function(item) {
+
+                var style = window.getComputedStyle(item),
+                    marginLeft = parseInt(style.marginLeft) || 0,
+                    marginRight = parseInt(style.marginRight) || 0;
+
+                offsetAll = offsetAll ? (offsetAll + marginLeft + marginRight) : (marginLeft + marginRight);
+
+            });
+
+            this.$slider[0].setAttribute('style', 'width:' + Number(this.sliderWidth + offsetAll) + 'px');
+
+        }
+
+        this.renderUI = function() {
+
+            var jPanelTemplate = '<div class="jPanel">\
+                <button class="prevBtn">' + this.options.prev + '</button>\
+                <button class="nextBtn">' + this.options.next + '</button>\
+            </div>';
+
+            this.$el[0].insertAdjacentHTML('beforeend', jPanelTemplate);
+
+        }
+
+        this.events = function() {
+
             
-            moveNext();
+            
+        }
 
-        }, false);
+        this.moveNext = function() {
 
-        app.$body.querySelector('.jPrev').addEventListener('click', function() { 
 
-            moveRight();
 
-        }, false);
+        }
 
-    };
+        this.movePrev = function() {
 
-    // Reset
-    resetJscrolly = function() {
+            
+            
+        }
 
-        this.options.$wrapper.removeAttribute('style');
+        this.rebuild = function() {
+            
 
-    };
 
-    // Export jScrolly
-    //app.$window.jScrolly = initJscrolly;
+        }
+
+        this.reset = function() {
+            
+
+            
+        }
+
+        this.init();
+
+    }
+
+    window.jScrolly = new jScrolly('1');
 
 })(); 
