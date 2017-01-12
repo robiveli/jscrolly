@@ -75,9 +75,12 @@
 
         this.moveNext = function() {
 
-            console.log(this.slideStep);
+            this.currentStep = this.step;
+            this.step = this.step ? (this.step + this.slideStep) : this.slideStep;
 
-            this.$slider[0].style.transform = 'translateX(-' + this.slideStep + 'px)';
+            console.log(this.step);
+
+            this.$slider[0].style.transform = 'translateX(-' + this.step + 'px)';
 
         }
 
