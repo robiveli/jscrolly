@@ -20,6 +20,9 @@
             this.$slider = this.$el[0].getElementsByClassName('slider');
             this.$items = this.$slider[0].childNodes;
             this.itemsNum = this.$items.length;
+            this.$firstItem = this.$items[0];
+            this.$lastItem = this.$items[this.itemsNum - 1];
+            this.wraperWidth = this.$el[0].offsetWidth;
             this.sliderWidth = this.itemsNum * this.$items[0].offsetWidth;
             this.slideStep = this.$items[0].offsetWidth;
 
@@ -30,20 +33,25 @@
 
         this.setupSlider = function() {
 
-            var offsetAll;
+            var offsetAll,
+                itemsWithOffset;
                
-            this.$items.forEach(function(item) {
+            this.$items.forEach(function(item, index) {
 
                 var style = window.getComputedStyle(item),
-                    marginLeft = parseInt(style.marginLeft) || 0,
-                    marginRight = parseInt(style.marginRight) || 0;
+                    marginLeft = parseInt(style.marginLeft),
+                    marginRight = parseInt(style.marginRight);
 
                 offsetAll = offsetAll ? (offsetAll + marginLeft + marginRight) : (marginLeft + marginRight);
+                itemsWithOffset = index;
 
             });
 
             this.$slider[0].style.width = Number(this.sliderWidth + offsetAll) + 'px';
             this.$slider[0].style.transform = 'translateX(0px)';
+
+            this.stepOffset = offsetAll / itemsWithOffset;
+            this.offsetAll = offsetAll;
 
             // TODO - vendor support
             //this.$slider[0].style.WebkitTransform = 'translate(0px)';
@@ -68,27 +76,51 @@
             this.$nextBtn = document.getElementsByClassName('nextBtn');
             this.$prevBtn = document.getElementsByClassName('prevBtn');
 
-            this.$nextBtn[0].addEventListener('click', this.moveNext.bind(this));
-            this.$prevBtn[0].addEventListener('click', this.movePrev.bind(this));
+            this.$nextBtn[0].addEventListener('click', this.moveSlide.bind(this));
+            this.$prevBtn[0].addEventListener('click', this.moveSlide.bind(this));
 
         }
 
-        this.moveNext = function() {
+        this.moveSlide = function(e) {
 
-            this.currentStep = this.step;
-            this.step = this.step ? (this.step + this.slideStep) : this.slideStep;
-
-            console.log(this.step);
-
-            this.$slider[0].style.transform = 'translateX(-' + this.step + 'px)';
-
-        }
-
-        this.movePrev = function() {
-
-            this.$slider[0].style.transform = 'translateX(' + this.slideStep + 'px)';
+            var maxSlideNext = (this.sliderWidth - this.wraperWidth) + this.offsetAll,
+                maxSlidePrev = 0,
+                maxSteps = Math.round(this.sliderWidth / this.wraperWidth);
             
+            this.currentStep = this.currentStep || 0;
+            this.step = (this.step ? (this.step + this.slideStep) : this.slideStep) + this.stepOffset;
+
+            if (e.target === this.$nextBtn[0]) {
+
+                this.currentStep++;
+
+                if (this.currentStep <= maxSteps) {
+
+                    this.$slider[0].style.transform = 'translateX(-' + this.step + 'px)';
+
+                } else {
+
+                    this.$slider[0].style.transform = 'translateX(-' + maxSlideNext + 'px)';
+
+                }
+
+            } else {
+
+                this.$slider[0].style.transform = 'translateX(' + this.step + 'px)';
+
+            }
+
+            //console.log(this.sliderWidth, this.wraperWidth);
+            console.log(Math.round(this.sliderWidth / this.wraperWidth));
+            console.log(this.currentStep);
+
         }
+
+        // this.setNeactiveBtn = function(e) {
+
+        //     e.target.className += ' neactive';
+
+        // }
 
         this.rebuild = function() {
             
@@ -106,6 +138,8 @@
 
     }
 
-    window.jScrolly = new jScrolly('1');
+    window.jScrolly = new jScrolly({
+        test: 1
+    });
 
 })(); 
