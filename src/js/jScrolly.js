@@ -20,8 +20,6 @@
             this.$slider = this.$el[0].getElementsByClassName('slider');
             this.$items = this.$slider[0].childNodes;
             this.itemsNum = this.$items.length;
-            this.$firstItem = this.$items[0];
-            this.$lastItem = this.$items[this.itemsNum - 1];
             this.wraperWidth = this.$el[0].offsetWidth;
             this.sliderWidth = this.itemsNum * this.$items[0].offsetWidth;
             this.slideStep = this.$items[0].offsetWidth;
@@ -76,51 +74,64 @@
             this.$nextBtn = document.getElementsByClassName('nextBtn');
             this.$prevBtn = document.getElementsByClassName('prevBtn');
 
-            this.$nextBtn[0].addEventListener('click', this.moveSlide.bind(this));
-            this.$prevBtn[0].addEventListener('click', this.moveSlide.bind(this));
+            this.$nextBtn[0].addEventListener('click', this.setupMoveSlide.bind(this));
+            this.$prevBtn[0].addEventListener('click', this.setupMoveSlide.bind(this));
 
         }
 
-        this.moveSlide = function(e) {
+        this.setupMoveSlide = function(e) {
 
             var maxSlideNext = (this.sliderWidth - this.wraperWidth) + this.offsetAll,
                 maxSlidePrev = 0,
                 maxSteps = Math.round(this.sliderWidth / this.wraperWidth);
-            
+
             this.currentStep = this.currentStep || 0;
-            this.step = (this.step ? (this.step + this.slideStep) : this.slideStep) + this.stepOffset;
-
+            
             if (e.target === this.$nextBtn[0]) {
-
-                this.currentStep++;
+                
+                this.step = (this.step ? (this.step + this.slideStep) : this.slideStep) + this.stepOffset;
 
                 if (this.currentStep <= maxSteps) {
 
-                    this.$slider[0].style.transform = 'translateX(-' + this.step + 'px)';
+                    this.currentStep++;
+
+                    this.moveSlide(this.step);
 
                 } else {
 
-                    this.$slider[0].style.transform = 'translateX(-' + maxSlideNext + 'px)';
+                    this.moveSlide(maxSlideNext);
 
                 }
 
-            } else {
+            }
 
-                this.$slider[0].style.transform = 'translateX(' + this.step + 'px)';
+            if (e.target === this.$prevBtn[0]) {
+                
+                if (this.currentStep === maxSlidePrev && this.currentStep === 0) {
+
+                    return;
+
+                } else {
+
+                    this.currentStep--;
+                    this.step = (this.step - this.slideStep) - this.stepOffset;
+
+                    this.moveSlide(this.step);
+
+                }
 
             }
 
-            //console.log(this.sliderWidth, this.wraperWidth);
-            console.log(Math.round(this.sliderWidth / this.wraperWidth));
-            console.log(this.currentStep);
+            console.log(this.step);
+            console.log(this.currentStep, maxSteps);
 
         }
 
-        // this.setNeactiveBtn = function(e) {
+        this.moveSlide = function(step) {
 
-        //     e.target.className += ' neactive';
+            this.$slider[0].style.transform = 'translateX(-' + step + 'px)';
 
-        // }
+        }
 
         this.rebuild = function() {
             
@@ -128,7 +139,7 @@
 
         }
 
-        this.reset = function() {
+        this.destroy = function() {
             
 
             
@@ -138,8 +149,6 @@
 
     }
 
-    window.jScrolly = new jScrolly({
-        test: 1
-    });
+    window.jScrolly = jScrolly;
 
 })(); 
