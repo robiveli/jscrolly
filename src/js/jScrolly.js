@@ -7,14 +7,34 @@
 
         console.log(options);
 
-        this.options = {
+        var defaults = {
 
             prevText: 'Previous',
             nextText: 'Next'
 
         };
 
-        this.init = function() {
+        this.options = options ? extendDefaults(defaults, options) : defaults;
+
+        this.init();
+
+    };
+
+    function extendDefaults(defaults, options) {
+
+        Object.keys(options).forEach(function(keys) {
+
+            defaults[keys] = options[keys];
+
+        }.bind(this));
+
+        return defaults;
+        
+    }
+
+    jScrolly.prototype = {
+
+        init: function() {
 
             this.$el = document.getElementsByClassName('jScrolly');
             this.$slider = this.$el[0].getElementsByClassName('slider');
@@ -25,10 +45,11 @@
 
             this.setupSlider();
             this.renderUI();
+            this.rebuildListener();
 
-        }
+        },
 
-        this.setupSlider = function() {
+        setupSlider: function() {
 
             var offsetAll,
                 itemsWithOffset;
@@ -57,9 +78,9 @@
             // TODO - vendor support
             //this.$slider[0].style.WebkitTransform = 'translate(0px)';
 
-        }
+        },
 
-        this.renderUI = function() {
+        renderUI: function() {
 
             var jPanelTemplate = '<div class="jPanel">\
                 <button class="prevBtn">' + this.options.prevText + '</button>\
@@ -70,9 +91,9 @@
 
             this.eventsSetup();
 
-        }
+        },
 
-        this.eventsSetup = function() {
+        eventsSetup: function() {
 
             this.$nextBtn = document.getElementsByClassName('nextBtn');
             this.$prevBtn = document.getElementsByClassName('prevBtn');
@@ -80,9 +101,9 @@
             this.$nextBtn[0].addEventListener('click', this.moveNext.bind(this));
             this.$prevBtn[0].addEventListener('click', this.movePrev.bind(this));
 
-        }
+        },
 
-        this.moveNext = function() {
+        moveNext: function() {
 
             if (this.step > this.maxSlideNext) { return; }
 
@@ -98,9 +119,9 @@
 
             }
 
-        }
+        },
 
-        this.movePrev = function() {
+        movePrev: function() {
 
             if (this.step !== this.maxSlidePrev) {
 
@@ -110,27 +131,24 @@
 
             }
             
-        }
+        },
 
-        this.animate = function(step) {
+        animate: function(step) {
 
             this.$slider[0].style.transform = 'translateX(-' + step + 'px)';
 
-        }
+        },
 
-        this.rebuild = function() {
+        rebuildListener: function() {
             
+            window.addEventListener('resize', function(e) {
 
+                this.animate(0);
+                this.step = 0;
+
+            }.bind(this));
 
         }
-
-        this.destroy = function() {
-            
-
-            
-        }
-
-        this.init();
 
     }
 
