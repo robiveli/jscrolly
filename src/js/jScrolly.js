@@ -5,8 +5,6 @@
 
     var jScrolly = function(options) {
 
-        console.log(options);
-
         var defaults = {
 
             prevText: 'Previous',
@@ -15,6 +13,8 @@
         };
 
         this.options = options ? extendDefaults(defaults, options) : defaults;
+
+        console.log(this.options);
 
         this.init();
 
@@ -72,7 +72,7 @@
             this.maxSlideNext = this.sliderWidth - this.wraperWidth;
             this.maxSlidePrev = 0;
 
-            this.$slider[0].style.width = Number(this.initialSliderWidth + offsetAll) + 'px';
+            this.$slider[0].style.width = this.sliderWidth + 'px';
             this.$slider[0].style.transform = 'translateX(0px)';
 
             // TODO - vendor support
@@ -130,6 +130,8 @@
                 this.animate(this.step);
 
             }
+
+            (!this.step || this.step === this.maxSlidePrev) && this.setupLastStep(this.step || 0);
             
         },
 
@@ -139,12 +141,21 @@
 
         },
 
+        setupLastStep: function(step) {
+
+            console.log(step);
+
+        },
+
         rebuildListener: function() {
             
-            window.addEventListener('resize', function(e) {
+            window.addEventListener('resize', function() {
 
-                this.animate(0);
                 this.step = 0;
+                this.wraperWidth = this.$el[0].offsetWidth;
+                this.initialSliderWidth = this.itemsNum * this.$items[0].offsetWidth;
+
+                this.setupSlider();
 
             }.bind(this));
 
