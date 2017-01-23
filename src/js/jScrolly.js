@@ -7,8 +7,16 @@
 
         var defaults = {
 
-            prevText: 'Previous',
-            nextText: 'Next'
+            buttonsClass: 'jPanel',
+            buttonPrevClass: 'prevBtn',
+            buttonNextClass: 'nextBtn',
+            buttonPrevText: 'Previous',
+            buttoNextText: 'Next',
+
+            onFirstSlide: null,
+            onSlide: null,
+
+            slideSpeed: 400
 
         };
 
@@ -68,7 +76,7 @@
             this.initialSliderWidth = this.itemsNum * this.$items[0].offsetWidth;
 
             this.setupSlider();
-            this.renderUI();
+            this.renderArrows();
             this.rebuildListener();
 
         },
@@ -104,11 +112,11 @@
 
         },
 
-        renderUI: function() {
+        renderArrows: function() {
 
-            var jPanelTemplate = '<div class="jPanel">\
-                <button class="prevBtn">' + this.options.prevText + '</button>\
-                <button class="nextBtn">' + this.options.nextText + '</button>\
+            var jPanelTemplate = '<div class="' + this.options.buttonsClass + '">\
+                <button class="' + this.options.buttonPrevClass + '">' + this.options.buttonPrevText + '</button>\
+                <button class="' + this.options.buttonNextClass + '">' + this.options.buttonNextText + '</button>\
             </div>';
 
             this.$el[0].insertAdjacentHTML('beforeend', jPanelTemplate);
