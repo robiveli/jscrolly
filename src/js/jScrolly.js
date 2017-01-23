@@ -32,6 +32,30 @@
         
     }
 
+    function simpleThrottle(callback, delay) {
+
+        var delay = delay || 250;
+
+        return function () { 
+
+            if (!this.throttled) {
+
+                this.throttled = true;
+
+                clearTimeout(timeoutInit);
+                var timeoutInit = setTimeout(function () { 
+
+                    callback.apply(this, arguments);
+                    this.throttled = false; 
+
+                }, delay);
+
+            }
+
+        }
+
+    }
+
     jScrolly.prototype = {
 
         init: function() {
@@ -149,7 +173,7 @@
 
         rebuildListener: function() {
             
-            window.addEventListener('resize', function() {
+            window.addEventListener('resize', simpleThrottle(function() {
 
                 this.step = 0;
                 this.wraperWidth = this.$el[0].offsetWidth;
@@ -157,7 +181,7 @@
 
                 this.setupSlider();
 
-            }.bind(this));
+            }.bind(this)));
 
         }
 
