@@ -14,9 +14,7 @@
             buttoNextText: 'Next',
 
             onFirstSlide: null,
-            onSlide: null,
-
-            slideSpeed: 400
+            onSlide: null
 
         };
 
