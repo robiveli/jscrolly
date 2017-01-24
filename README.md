@@ -1,29 +1,21 @@
-# README #
+# jScrolly #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+### simple dependency-free javascript carousel slider plugin
 
-### What is this repository for? ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
 
-### How do I get set up? ###
+### Usage ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
 
-### Contribution guidelines ###
 
-* Writing tests
-* Code review
-* Other guidelines
+### Demo ###
 
-### Who do I talk to? ###
 
-* Repo owner or admin
-* Other community or team contact
+
+### Options ###
+
+
+
+### License  ###
+
+jScrolly is licensed under the [MIT license](http://opensource.org/licenses/MIT).
