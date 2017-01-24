@@ -1,5 +1,4 @@
 # jScrolly #
-
 ### simple dependency-free javascript carousel slider plugin
 
 
