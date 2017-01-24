@@ -163,6 +163,8 @@
 
                 this.animate(this.step);
 
+                this.customCallbacks();
+
             }
             
         },
@@ -190,6 +192,8 @@
         customCallbacks: function() {
 
             (this.step == undefined) && this.options.onFirstSlide && this.options.onFirstSlide();
+
+            this.options.onSlide && this.options.onSlide();
 
         }
 
