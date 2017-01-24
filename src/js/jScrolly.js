@@ -11,8 +11,9 @@
             buttonPrevClass: 'prevBtn',
             buttonNextClass: 'nextBtn',
             buttonPrevText: 'Previous',
-            buttoNextText: 'Next',
+            buttonNextText: 'Next',
 
+            onRenderButtons: null,
             onFirstSlide: null,
             onSlide: null
 
@@ -74,7 +75,7 @@
             this.initialSliderWidth = this.itemsNum * this.$items[0].offsetWidth;
 
             this.setupSlider();
-            this.renderArrows();
+            this.renderButtons();
             this.rebuildListener();
 
         },
@@ -110,7 +111,7 @@
 
         },
 
-        renderArrows: function() {
+        renderButtons: function() {
 
             var jPanelTemplate = '<div class="' + this.options.buttonsClass + '">\
                 <button class="' + this.options.buttonPrevClass + '">' + this.options.buttonPrevText + '</button>\
@@ -120,6 +121,8 @@
             this.$el[0].insertAdjacentHTML('beforeend', jPanelTemplate);
 
             this.eventsSetup();
+
+            this.options.onRenderButtons && this.options.onRenderButtons(document.getElementsByClassName(this.options.buttonsClass));
 
         },
 

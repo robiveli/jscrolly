@@ -56,6 +56,12 @@
             
     }</style><body><div class="jScrolly"><div class="jContent"><div class="slider"><article class="demoBlock">Slide One</article><article class="demoBlock">Slide Two</article><article class="demoBlock">Slide Three</article><article class="demoBlock">Slide Four</article><article class="demoBlock">Slide Five</article><article class="demoBlock">Slide Six</article><article class="demoBlock">Slide Seven</article><article class="demoBlock">Slide Eight</article><article class="demoBlock">Slide Nine</article><article class="demoBlock">Slide Ten</article></div></div></div><script src="js/jScrolly.js"></script><script>var jScrollyDemo = new jScrolly({
 
+        onRenderButtons: function($arrowsWrap) {
+
+            console.log($arrowsWrap);
+
+        },
+
         onFirstSlide: function() {
 
             console.log('On first slide');

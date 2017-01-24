@@ -129,6 +129,12 @@
 <script>
     var jScrollyDemo = new jScrolly({
 
+        onRenderButtons: function($arrowsWrap) {
+
+            console.log($arrowsWrap);
+
+        },
+
         onFirstSlide: function() {
 
             console.log('On first slide');
