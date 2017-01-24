@@ -139,13 +139,15 @@
 
             if (this.step > this.maxSlideNext) { return; }
 
+            this.customCallbacks();
+            
             this.step = this.step ? (this.step + this.slideStep) : this.slideStep;
 
             if (this.step < this.maxSlideNext) {
                 
                 this.maxSlideNext > this.step ? this.animate(this.step) : this.animate(this.maxSlideNext);
 
-            } else {
+            } else { 
 
                 this.animate(this.maxSlideNext);
 
@@ -162,20 +164,12 @@
                 this.animate(this.step);
 
             }
-
-            (!this.step || this.step === this.maxSlidePrev) && this.setupLastStep(this.step || 0);
             
         },
 
         animate: function(step) {
 
             this.$slider[0].style.transform = 'translateX(-' + step + 'px)';
-
-        },
-
-        setupLastStep: function(step) {
-
-            console.log(step);
 
         },
 
@@ -190,6 +184,12 @@
                 this.setupSlider();
 
             }.bind(this)));
+
+        },
+
+        customCallbacks: function() {
+
+            (this.step == undefined) && this.options.onFirstSlide && this.options.onFirstSlide();
 
         }
 

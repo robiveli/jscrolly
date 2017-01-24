@@ -128,7 +128,13 @@
 <script src="js/jScrolly.js"></script>
 <script>
     var jScrollyDemo = new jScrolly({
-        test: 1
+
+        onFirstSlide: function() {
+
+            console.log('On first slide');
+
+        }
+
     });
 </script>
 
