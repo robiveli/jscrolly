@@ -63,6 +63,23 @@
 
     }
 
+    function setPrefix(self) {
+
+        var prefixes = ['transform', 'WebkitTransform', 'msTransform', 'MozTransform'],
+            testEl = document.createElement('div');
+
+        prefixes.forEach(function(val) {
+
+            if (testEl.style[val] !== undefined && !self.transformPrefixed) {
+
+                self.transformPrefixed = val;
+
+            }
+
+        });
+
+    }
+
     jScrolly.prototype = {
 
         init: function() {
@@ -73,6 +90,8 @@
             this.itemsNum = this.$items.length;
             this.wraperWidth = this.$el[0].offsetWidth;
             this.initialSliderWidth = this.itemsNum * this.$items[0].offsetWidth;
+
+            setPrefix(this);
 
             this.setupSlider();
             this.renderButtons();
@@ -104,10 +123,7 @@
             this.maxSlidePrev = 0;
 
             this.$slider[0].style.width = this.sliderWidth + 'px';
-            this.$slider[0].style.transform = 'translateX(0px)';
-
-            // TODO - vendor support
-            //this.$slider[0].style.WebkitTransform = 'translate(0px)';
+            this.$slider[0].style[this.transformPrefixed] = 'translateX(0px)';
 
         },
 
@@ -172,7 +188,7 @@
 
         animate: function(step) {
 
-            this.$slider[0].style.transform = 'translateX(-' + step + 'px)';
+            this.$slider[0].style[this.transformPrefixed] = 'translateX(-' + step + 'px)';
 
         },
 
