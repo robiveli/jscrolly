@@ -35,7 +35,7 @@ Demo available [here](#).
 
 jScrolly can take an optional parameters - an object of key/value settings:
 
-- **buttonsClass** String *(default:jPanel)* - index position Swipe should start at
+- **buttonsClass** String *(default:jPanel)* - css class for buttons container
 - **buttonPrevClass** String *(default:prevBtn)* - css class for previos button
 - **buttonNextClass** String *(default:nextBtn)* - css class for next button
 - **buttonPrevText** String *(default:Previous)* - text for for previos button
