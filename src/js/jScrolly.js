@@ -39,9 +39,9 @@
         
     }
 
-    function simpleThrottle(callback, delay) {
+    function simpleThrottle(callback, delay = 250) {
 
-        var delay = delay || 250;
+        var delay;
 
         return function () { 
 

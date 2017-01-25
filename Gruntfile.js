@@ -32,8 +32,12 @@ module.exports = function(grunt) {
                 ]
             },
             dist: {
-                src: '<%= settings.distPath %>css/jScrolly.css',
-                dest: '<%= settings.distPath %>css/jScrolly.css'
+                files: [{
+                    expand: true,
+                    cwd: '<%= settings.srcPath %>sass/',
+                    src: ['*.js'],
+                    dest: '<%= settings.distPath %>css/'
+                }]
             }
         },
 
@@ -42,17 +46,23 @@ module.exports = function(grunt) {
                 presets: ['es2015']
             },
             dist: {
-                files: {
-                    '<%= settings.distPath %>js/jScrolly.js': '<%= settings.srcPath %>js/jScrolly.js'
-                }
+                files: [{
+                    expand: true,
+                    cwd: '<%= settings.srcPath %>js/',
+                    src: ['*.js'],
+                    dest: '<%= settings.distPath %>js/'
+                }]
             }
         },
 
         uglify: {
             my_target: {
-                files: {
-                    '<%= settings.distPath %>js/jScrolly.js': '<%= settings.srcPath %>js/jScrolly.js'
-                } 
+                files: [{
+                    expand: true,
+                    cwd: '<%= settings.distPath %>js/',
+                    src: ['*.js'],
+                    dest: '<%= settings.distPath %>js/'
+                }]
             }
         },
 
