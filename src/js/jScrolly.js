@@ -1,9 +1,8 @@
-
-;(function() { 
+{ 
 
     'use strict';
 
-    var jScrolly = function(options) {
+    let jScrolly = function(options) {
 
         var defaults = {
 
@@ -20,8 +19,6 @@
         };
 
         this.options = options ? extendDefaults(defaults, options) : defaults;
-
-        console.log(this.options);
 
         this.init();
 
@@ -76,13 +73,13 @@
 
     jScrolly.prototype = {
 
-        init: function() {
+        init() {
 
             this.$el = document.getElementsByClassName('jScrolly');
             this.$slider = this.$el[0].getElementsByClassName('slider');
             this.$items = this.$slider[0].childNodes;
             this.itemsNum = this.$items.length;
-            this.wraperWidth = this.$el[0].offsetWidth;
+            this.jContentWidth = this.$el[0].offsetWidth;
             this.initialSliderWidth = this.itemsNum * this.$items[0].offsetWidth;
 
             setPrefix(this);
@@ -93,7 +90,7 @@
 
         },
 
-        setupSlider: function() {
+        setupSlider() {
 
             var offsetAll,
                 itemsWithOffset;
@@ -113,7 +110,7 @@
                 stepOffset = offsetAll / itemsWithOffset;
 
             this.slideStep = this.$items[0].offsetWidth + stepOffset;
-            this.maxSlideNext = sliderWidth - this.wraperWidth;
+            this.maxSlideNext = sliderWidth - this.jContentWidth;
             this.maxSlidePrev = 0;
 
             this.$slider[0].style.width = sliderWidth + 'px';
@@ -121,7 +118,7 @@
 
         },
 
-        renderButtons: function() {
+        renderButtons() {
 
             var jPanelTemplate = '<div class="' + this.options.buttonsClass + '">\
                 <button class="' + this.options.buttonPrevClass + '">' + this.options.buttonPrevText + '</button>\
@@ -136,7 +133,7 @@
 
         },
 
-        eventsSetup: function() {
+        eventsSetup() {
 
             var $nextBtn = document.getElementsByClassName('nextBtn'),
                 $prevBtn = document.getElementsByClassName('prevBtn');
@@ -146,7 +143,7 @@
 
         },
 
-        moveNext: function() {
+        moveNext() {
 
             if (this.step > this.maxSlideNext) { return; }
 
@@ -166,7 +163,7 @@
 
         },
 
-        movePrev: function() {
+        movePrev() {
 
             if (this.step !== this.maxSlidePrev) {
 
@@ -180,27 +177,27 @@
             
         },
 
-        animate: function(step) {
+        animate(step) {
 
             this.$slider[0].style[this.transformPrefixed] = 'translateX(-' + step + 'px)';
 
         },
 
-        rebuildListener: function() {
+        rebuildListener() {
             
-            window.addEventListener('resize', simpleThrottle(function() {
+            window.addEventListener('resize', simpleThrottle(() => {
 
                 this.step = 0;
-                this.wraperWidth = this.$el[0].offsetWidth;
+                this.jContentWidth = this.$el[0].offsetWidth;
                 this.initialSliderWidth = this.itemsNum * this.$items[0].offsetWidth;
 
                 this.setupSlider();
 
-            }.bind(this)));
+            }));
 
         },
 
-        customCallbacks: function() {
+        customCallbacks() {
 
             (this.step == undefined) && this.options.onFirstSlide && this.options.onFirstSlide();
 
@@ -212,4 +209,4 @@
 
     window.jScrolly = jScrolly;
 
-})(); 
+}; 
