@@ -29,19 +29,13 @@
 
     function extendDefaults(defaults, options) {
 
-        Object.keys(options).forEach(function(keys) {
-
-            defaults[keys] = options[keys];
-
-        }.bind(this));
+        Object.assign(defaults, options);
 
         return defaults;
         
     }
 
-    function simpleThrottle(callback, delay = 250) {
-
-        var delay;
+    function simpleThrottle(callback, delay = 150) {
 
         return function () { 
 
@@ -147,8 +141,8 @@
             var $nextBtn = document.getElementsByClassName('nextBtn'),
                 $prevBtn = document.getElementsByClassName('prevBtn');
 
-            $nextBtn[0].addEventListener('click', this.moveNext.bind(this));
-            $prevBtn[0].addEventListener('click', this.movePrev.bind(this));
+            $nextBtn[0].addEventListener('click', () => this.moveNext());
+            $prevBtn[0].addEventListener('click', () => this.movePrev());
 
         },
 

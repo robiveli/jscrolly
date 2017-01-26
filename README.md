@@ -13,7 +13,17 @@ npm install jscrolly
 
 ### Usage ###
 
-Here is the initial required structure, place any content you want within the items:
+Include required javascript:
+```sh
+<script src="jScrolly.js"></script>
+```
+
+Include css:
+```sh
+<link href='jScrolly.css' rel='stylesheet' type='text/css'>
+```
+
+Initial required structure, place any content you want within the items:
 ```sh
 <div class="jScrolly">
     <div class="jContent">
@@ -25,6 +35,12 @@ Here is the initial required structure, place any content you want within the it
         </div>
     </div>
 </div>
+```
+Finally, initialize jScrolly:
+```sh
+<script>
+    var myScroller = new jScrolly();
+</script>
 ```
 
 ### Demo ###
@@ -43,6 +59,38 @@ jScrolly can take an optional parameters - an object of key/value settings:
 - **onRenderButtons** Function *(default:null)* - runs when buttons are rendered to DOM
 - **onFirstSlide** Function *(default:null)* - runs only once on first slide change
 - **onSlide** Function *(default:null)* - runs at slide change
+
+**Example**
+```sh
+<script>
+    var myScroller = new jScrolly({
+
+        onRenderButtons: function($arrowsWrap) {
+            console.log($arrowsWrap + 'is rendered');
+        },
+
+        onFirstSlide: function() {
+            console.log('On first slide change');
+        },
+
+        onSlide: function() {
+            console.log('On slide change');
+        }
+
+    });
+</script>
+```
+
+Default css settings are placed in `/sass/library/_variables.scss`:
+
+- **$baseColor** *(default:#3A3A3A)* - main color for buttons
+- **$transitionSpeed** *(default:400ms)* - speed of previous and next transitions
+- **$btnSize** *(default:60)* - size of buttons in rem
+- **$baseBreakpoint** *(default:680px)* - media query value
+
+**Note:**
+To keep simplicity, native scrolling feature is applied for small screen sizes, based on `$baseBreakpoint` value.
+
 
 ### License  ###
 
