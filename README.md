@@ -36,7 +36,7 @@ Finally, initialize jScrolly:
 
 ### Demo ###
 
-Demo available [here](#).
+Demo available [here](http://www.rvdizajn.com/jscrolly/).
 
 ### Options ###
 
