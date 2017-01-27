@@ -32,7 +32,7 @@
         
     }
 
-    function simpleThrottle(callback, delay = 150) {
+    function simpleThrottle(callback, delay = 200) {
 
         return function () { 
 
@@ -79,8 +79,6 @@
             this.$slider = this.$el[0].getElementsByClassName('slider');
             this.$items = this.$slider[0].childNodes;
             this.itemsNum = this.$items.length;
-            this.jContentWidth = this.$el[0].offsetWidth;
-            this.initialSliderWidth = this.itemsNum * this.$items[0].offsetWidth;
 
             setPrefix(this);
 
@@ -106,11 +104,11 @@
 
             });
 
-            var sliderWidth = Number(this.initialSliderWidth + offsetAll),
+            var sliderWidth = Number((this.itemsNum * this.$items[0].offsetWidth) + offsetAll),
                 stepOffset = offsetAll / itemsWithOffset;
 
             this.slideStep = this.$items[0].offsetWidth + stepOffset;
-            this.maxSlideNext = sliderWidth - this.jContentWidth;
+            this.maxSlideNext = sliderWidth - this.$el[0].offsetWidth;
             this.maxSlidePrev = 0;
 
             this.$slider[0].style.width = sliderWidth + 'px';
@@ -129,14 +127,14 @@
 
             this.eventsSetup();
 
-            this.options.onRenderButtons && this.options.onRenderButtons(document.getElementsByClassName(this.options.buttonsClass));
+            this.options.onRenderButtons && this.options.onRenderButtons(this.$el[0].getElementsByClassName(this.options.buttonsClass));
 
         },
 
         eventsSetup() {
 
-            var $nextBtn = document.getElementsByClassName('nextBtn'),
-                $prevBtn = document.getElementsByClassName('prevBtn');
+            var $nextBtn = this.$el[0].getElementsByClassName('nextBtn'),
+                $prevBtn = this.$el[0].getElementsByClassName('prevBtn');
 
             $nextBtn[0].addEventListener('click', () => this.moveNext());
             $prevBtn[0].addEventListener('click', () => this.movePrev());
@@ -184,12 +182,13 @@
         },
 
         rebuildListener() {
+
+            var $jContent = this.$el[0].getElementsByClassName('jContent')[0];
             
             window.addEventListener('resize', simpleThrottle(() => {
 
+                $jContent.scrollLeft = 0;
                 this.step = 0;
-                this.jContentWidth = this.$el[0].offsetWidth;
-                this.initialSliderWidth = this.itemsNum * this.$items[0].offsetWidth;
 
                 this.setupSlider();
 
