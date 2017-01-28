@@ -3,7 +3,10 @@
   "description": "Simple dependency-free javascript carousel slider plugin",
   "main": [
     "dist/",
-    "src/"
+    "src/",
+    "Gruntfile.js",
+    "package.json",
+    "README.md"
   ],
   "authors": [
     "Robert Velickovski"
