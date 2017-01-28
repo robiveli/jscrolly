@@ -76,7 +76,7 @@ module.exports = function(grunt) {
                     expand: true, 
                     cwd: '<%= settings.srcPath %>', 
                     src: ['**/*.html'], 
-                    dest: '<%= settings.distPath %>'
+                    dest: ''
                 }]
             }
         },
