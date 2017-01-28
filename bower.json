@@ -1,5 +1,5 @@
 {
-  "name": "jScrolly",
+  "name": "jscrolly",
   "description": "Simple dependency-free javascript carousel slider plugin",
   "main": [
     "dist/",
