@@ -3,6 +3,11 @@
 
 ### Install ###
 
+With npm:
+```sh
+npm install jscrolly
+```
+
 With Bower:
 ```sh
 bower install jscrolly
