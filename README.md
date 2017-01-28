@@ -1,6 +1,12 @@
 # jScrolly #
 ### simple dependency-free javascript carousel slider plugin
 
+### Install ###
+
+With Bower:
+```sh
+bower install jscrolly
+```
 
 ### Usage ###
 
