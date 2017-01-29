@@ -93,6 +93,10 @@ Default css settings are placed in `/sass/library/_variables.scss`:
 **Note:**
 To keep simplicity, native scrolling feature is applied for small screen sizes, based on `$baseBreakpoint` value.
 
+### API ###
+
+`moveNext()` - slide to next slide
+`movePrev()` - slide to prev slide
 
 ### License  ###
 

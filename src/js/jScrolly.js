@@ -202,6 +202,12 @@
 
             this.options.onSlide && this.options.onSlide();
 
+        },
+
+        destroy() {
+
+            this.$el[0].getElementsByClassName('jPanel').remove();
+
         }
 
     }
