@@ -96,6 +96,7 @@ To keep simplicity, native scrolling feature is applied for small screen sizes, 
 ### API ###
 
 `moveNext()` - slide to next slide
+
 `movePrev()` - slide to prev slide
 
 ### License  ###
