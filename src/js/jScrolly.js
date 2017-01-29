@@ -206,7 +206,9 @@
 
         destroy() {
 
-            this.$el[0].getElementsByClassName('jPanel').remove();
+            this.$el[0].getElementsByClassName('jPanel')[0].remove();
+            this.$slider[0].style = '';
+            delete this.options;
 
         }
 

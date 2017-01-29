@@ -99,6 +99,8 @@ To keep simplicity, native scrolling feature is applied for small screen sizes, 
 
 `movePrev()` - slide to prev slide
 
+`destroy()` - destroys the current instance of jScrolly
+
 ### License  ###
 
 jScrolly is licensed under the [MIT license](http://opensource.org/licenses/MIT).
