@@ -9,6 +9,7 @@
             buttonsClass: 'jPanel',
             buttonPrevClass: 'prevBtn',
             buttonNextClass: 'nextBtn',
+            buttonNeactiveClass: 'neactive',
             buttonPrevText: 'Previous',
             buttonNextText: 'Next',
 
@@ -20,13 +21,29 @@
 
         this.options = options ? extendDefaults(defaults, options) : defaults;
 
+        setPolyfill();
+
         this.init();
 
     };
 
+    function setPolyfill() {
+
+        if (typeof NodeList.prototype.forEach !== 'function') {
+
+            NodeList.prototype.forEach = Array.prototype.forEach;
+
+        }
+
+    }
+
     function extendDefaults(defaults, options) {
 
-        Object.assign(defaults, options);
+        Object.keys(options).forEach((keys) => {
+
+            defaults[keys] = options[keys];
+
+        });
 
         return defaults;
         
@@ -34,14 +51,14 @@
 
     function simpleThrottle(callback, delay = 200) {
 
-        return function () { 
+        return function() { 
 
             if (!this.throttled) {
 
                 this.throttled = true;
 
                 clearTimeout(timeoutInit);
-                var timeoutInit = setTimeout(function () { 
+                var timeoutInit = setTimeout(() => { 
 
                     callback.apply(this, arguments);
                     this.throttled = false; 
@@ -59,7 +76,7 @@
         var prefixes = ['transform', 'WebkitTransform', 'msTransform', 'MozTransform'],
             testEl = document.createElement('div');
 
-        prefixes.forEach(function(val) {
+        prefixes.forEach((val) => {
 
             if (testEl.style[val] !== undefined && !self.transformPrefixed) {
 
@@ -119,7 +136,7 @@
         renderButtons() {
 
             var jPanelTemplate = '<div class="' + this.options.buttonsClass + '">\
-                <button class="' + this.options.buttonPrevClass + '">' + this.options.buttonPrevText + '</button>\
+                <button class="' + this.options.buttonPrevClass + ' ' + this.options.buttonNeactiveClass + '">' + this.options.buttonPrevText + '</button>\
                 <button class="' + this.options.buttonNextClass + '">' + this.options.buttonNextText + '</button>\
             </div>';
 
@@ -133,11 +150,11 @@
 
         eventsSetup() {
 
-            var $nextBtn = this.$el[0].getElementsByClassName('nextBtn'),
-                $prevBtn = this.$el[0].getElementsByClassName('prevBtn');
+            this.$nextBtn = this.$el[0].getElementsByClassName(this.options.buttonNextClass);
+            this.$prevBtn = this.$el[0].getElementsByClassName(this.options.buttonPrevClass);
 
-            $nextBtn[0].addEventListener('click', () => this.moveNext());
-            $prevBtn[0].addEventListener('click', () => this.movePrev());
+            this.$nextBtn[0].addEventListener('click', () => this.moveNext());
+            this.$prevBtn[0].addEventListener('click', () => this.movePrev());
 
         },
 
@@ -153,9 +170,12 @@
                 
                 this.maxSlideNext > this.step ? this.animate(this.step) : this.animate(this.maxSlideNext);
 
+                this.$prevBtn[0].className = this.options.buttonPrevClass;
+
             } else { 
 
                 this.animate(this.maxSlideNext);
+                this.setNeactiveBtn(this.$nextBtn[0]);
 
             }
 
@@ -169,10 +189,24 @@
 
                 this.animate(this.step);
 
+                this.$nextBtn[0].className = this.options.buttonNextClass;
+
                 this.customCallbacks();
 
             }
+
+            if (this.step == this.maxSlidePrev) {
+
+                this.setNeactiveBtn(this.$prevBtn[0]);
+
+            }
             
+        },
+
+        setNeactiveBtn($btn) {
+
+            $btn.className += ' ' + this.options.buttonNeactiveClass + '';
+
         },
 
         animate(step) {
@@ -191,6 +225,7 @@
                 this.step = 0;
 
                 this.setupSlider();
+                this.setNeactiveBtn(this.$prevBtn[0]);
 
             }));
 
@@ -206,7 +241,7 @@
 
         destroy() {
 
-            this.$el[0].getElementsByClassName('jPanel')[0].remove();
+            this.$el[0].getElementsByClassName(this.options.buttonsClass)[0].remove();
             this.$slider[0].style = '';
             delete this.options;
 

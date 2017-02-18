@@ -62,6 +62,12 @@
 
             }
 
+            &.neactive {
+
+                pointer-events: none; cursor: not-allowed; background: lighten($baseColor,50%);
+
+            }
+
         }
 
         .prevBtn {
