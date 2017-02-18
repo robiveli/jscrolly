@@ -56,7 +56,7 @@ jScrolly can take an optional parameters - an object of key/value settings:
 - **buttonsClass** String *(default:jPanel)* - css class for buttons container
 - **buttonPrevClass** String *(default:prevBtn)* - css class for previos button
 - **buttonNextClass** String *(default:nextBtn)* - css class for next button
-- **buttonNeactiveClass** String *(default:nextBtn)* - css class for neactive button
+- **buttonNeactiveClass** String *(default:neactive)* - css class for neactive button
 - **buttonPrevText** String *(default:Previous)* - text for for previos button
 - **buttonNextText** String *(default:Next)* - text for for next button
 - **onRenderButtons** Function *(default:null)* - runs when buttons are rendered to DOM
