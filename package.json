@@ -2,7 +2,7 @@
   "name": "jscrolly",
   "title": "jScrolly.js",
   "description": "Simple dependency-free javascript carousel slider plugin",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "license": "MIT",
   "author": {
     "name": "Robert Velickovski",
