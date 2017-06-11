@@ -4,6 +4,9 @@
   "description": "Simple dependency-free javascript carousel slider plugin",
   "main": [
     "dist/",
+    "src/",
+    "Gruntfile.js",
+    "package.json",
     "README.md"
   ],
   "authors": [
