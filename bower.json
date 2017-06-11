@@ -1,6 +1,6 @@
 {
   "name": "jscrolly",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Simple dependency-free javascript carousel slider plugin",
   "main": [
     "dist/",

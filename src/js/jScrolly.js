@@ -102,6 +102,21 @@
 
     }
 
+    function removeClass(el, className) {
+
+        if (el.classList) {
+
+            el.classList.remove(className);
+
+        }
+        else {
+
+            el.className = el.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+        
+        }
+
+    }
+
     jScrolly.prototype = {
 
         init() {
@@ -109,7 +124,6 @@
             this.$el = document.getElementsByClassName('jScrolly');
             this.$slider = this.$el[0].getElementsByClassName('slider');
             this.$items = this.$slider[0].childNodes;
-            this.itemsNum = this.$items.length;
 
             setPrefix(this);
 
@@ -121,26 +135,31 @@
 
         setupSlider() {
 
-            var offsetAll,
-                itemsWithOffset;
+            var itemsNum,
+                itemOffsetWidth,
+                offsetAll;
                
-            this.$items.forEach(function(item, index) {
+            this.$items.forEach((item, index) => {
 
-                if (item.nodeType !== Node.ELEMENT_NODE) { return; }
+                if (item.nodeType === Node.ELEMENT_NODE) {
 
-                var style = window.getComputedStyle(item),
-                    marginLeft = parseInt(style.marginLeft),
-                    marginRight = parseInt(style.marginRight);
+                    var style = window.getComputedStyle(item),
+                        marginLeft = parseInt(style.marginLeft),
+                        marginRight = parseInt(style.marginRight);
 
-                offsetAll = offsetAll ? (offsetAll + marginLeft + marginRight) : (marginLeft + marginRight);
-                itemsWithOffset = index;
+                    itemsNum = itemsNum ? itemsNum + 1 : 1;
+
+                    itemOffsetWidth = item.offsetWidth;
+                    offsetAll = offsetAll ? (offsetAll + marginLeft + marginRight) : (marginLeft + marginRight);
+
+                }
 
             });
 
-            var sliderWidth = Number((this.itemsNum * this.$items[0].offsetWidth) + offsetAll),
-                stepOffset = offsetAll / itemsWithOffset;
+            var sliderWidth = Number((itemsNum * itemOffsetWidth) + offsetAll),
+                stepOffset = offsetAll / (itemsNum - 1);
 
-            this.slideStep = this.$items[0].offsetWidth + stepOffset;
+            this.slideStep = itemOffsetWidth + stepOffset;
             this.maxSlideNext = sliderWidth - this.$el[0].offsetWidth;
             this.maxSlidePrev = 0;
 
@@ -220,6 +239,9 @@
         },
 
         setNeactiveBtn($btn) {
+
+            removeClass(this.$prevBtn[0], this.options.buttonNeactiveClass);
+            removeClass(this.$nextBtn[0], this.options.buttonNeactiveClass);
 
             if (!hasClass($btn, this.options.buttonNeactiveClass)) {
 
