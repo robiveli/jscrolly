@@ -126,6 +126,8 @@
                
             this.$items.forEach(function(item, index) {
 
+                if (item.nodeType !== Node.ELEMENT_NODE) { return; }
+
                 var style = window.getComputedStyle(item),
                     marginLeft = parseInt(style.marginLeft),
                     marginRight = parseInt(style.marginRight);
