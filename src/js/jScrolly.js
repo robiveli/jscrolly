@@ -88,6 +88,20 @@
 
     }
 
+    function hasClass(el, className) {
+
+        if (el.classList) {
+
+            return el.classList.contains(className);
+
+        } else {
+
+            return new RegExp('(^| )' + className + '( |$)', 'gi').test(el.className);
+
+        }
+
+    }
+
     jScrolly.prototype = {
 
         init() {
@@ -205,7 +219,11 @@
 
         setNeactiveBtn($btn) {
 
-            $btn.className += ' ' + this.options.buttonNeactiveClass + '';
+            if (!hasClass($btn, this.options.buttonNeactiveClass)) {
+
+                $btn.className += ' ' + this.options.buttonNeactiveClass + '';
+
+            }
 
         },
 
