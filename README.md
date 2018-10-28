@@ -3,30 +3,33 @@
 
 ### Install ###
 
-With npm:
-```sh
-npm install jscrolly
 ```
-
-With Bower:
-```sh
-bower install jscrolly
+npm install jscrolly
 ```
 
 ### Usage ###
 
-Include required javascript:
-```sh
+Include script:
+```
 <script src="jScrolly.js"></script>
 ```
 
-Include css:
-```sh
+or
+```
+import jScrolly from 'jScrolly';
+```
+
+Include styling for buttons (optionally, style it as you wish):
+```
 <link href='jScrolly.css' rel='stylesheet' type='text/css'>
+```
+or
+```
+@import 'jScrolly';
 ```
 
 Initial required structure, place any content you want within the items:
-```sh
+```
 <div class="jScrolly">
     <div class="jContent">
         <div class="slider">
@@ -39,7 +42,7 @@ Initial required structure, place any content you want within the items:
 </div>
 ```
 Finally, initialize jScrolly:
-```sh
+```
 <script>
     var myScroller = new jScrolly();
 </script>
@@ -47,37 +50,33 @@ Finally, initialize jScrolly:
 
 ### Demo ###
 
-Demo available [here](http://www.rvdizajn.com/jscrolly/).
+Demo available [here](https://www.rvdizajn.com/jscrolly/).
 
 ### Options ###
 
 jScrolly can take an optional parameters - an object of key/value settings:
 
+- **$transitionSpeed** String *(default:400ms)* - speed of previous and next transitions (in milliseconds)
 - **buttonsClass** String *(default:jPanel)* - css class for buttons container
 - **buttonPrevClass** String *(default:prevBtn)* - css class for previos button
 - **buttonNextClass** String *(default:nextBtn)* - css class for next button
 - **buttonNeactiveClass** String *(default:neactive)* - css class for neactive button
 - **buttonPrevText** String *(default:Previous)* - text for for previos button
 - **buttonNextText** String *(default:Next)* - text for for next button
-- **onRenderButtons** Function *(default:null)* - runs when buttons are rendered to DOM
 - **onFirstSlide** Function *(default:null)* - runs only once on first slide change
 - **onSlide** Function *(default:null)* - runs at slide change
 
 **Example**
-```sh
+```
 <script>
     var myScroller = new jScrolly({
-
-        onRenderButtons: function($arrowsWrap) {
-            console.log($arrowsWrap + 'is rendered');
-        },
 
         onFirstSlide: function() {
             console.log('On first slide change');
         },
 
         onSlide: function() {
-            console.log('On slide change');
+            console.log('On every slide change');
         }
 
     });
@@ -87,12 +86,7 @@ jScrolly can take an optional parameters - an object of key/value settings:
 Default css settings are placed in `/sass/library/_variables.scss`:
 
 - **$baseColor** *(default:#3A3A3A)* - main color for buttons
-- **$transitionSpeed** *(default:400ms)* - speed of previous and next transitions
-- **$btnSize** *(default:60)* - size of buttons in rem
-- **$baseBreakpoint** *(default:680px)* - media query value
-
-**Note:**
-To keep simplicity, native scrolling feature is applied for small screen sizes, based on `$baseBreakpoint` value.
+- **$btnSize** *(default:60)* - size of buttons in rem unit
 
 ### API ###
 
@@ -101,6 +95,13 @@ To keep simplicity, native scrolling feature is applied for small screen sizes, 
 `movePrev()` - slide to prev slide
 
 `destroy()` - destroys the current instance of jScrolly
+
+### Browser support ###
+
+It works in every modern browser where [classList](https://developer.mozilla.org/en-US/docs/Web/API/Element/classList) is supported.
+
+Consider using polyfill [classList](https://github.com/eligrey/classList.js/) feature if needed.
+
 
 ### License  ###
 

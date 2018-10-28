@@ -1,95 +1,60 @@
-
-/* Library */
 @import 'library/all';
 
-/* Base Style */
-.jScrolly { 
+.jScrolly {
 
-    position: relative;
+	> .jPanel {
 
-    > .jPanel {  
+		display: block; position: absolute; top: 100%; left: 50%;
+		margin-left: (-$btnSize/10) + rem;
 
-        display: none;   
+		> .prevBtn,
+		> .nextBtn {
 
-    }
+			float: left; display: inline-block; width: ($btnSize/10) + rem; height: ($btnSize/10) + rem; padding: 0; box-sizing: border-box;
+			background: $baseColor; text-indent: -9999rem; border: none; position: relative; overflow: hidden;
+			cursor: pointer; outline: none; transition: background 150ms ease-in-out;
 
-    > .jContent {
+			&:before {
 
-        overflow-x: scroll; padding-bottom: 0.5rem;
-        
-    }
+				content: ''; position: absolute; top: 50%; left: 50%; margin: -6px 0 0 -3px;
+				border: 6px solid transparent;
 
-    @media screen and (min-width: $baseBreakpoint) { 
+			}
 
-        > .jContent { 
+			&:hover {
 
-            overflow-x: hidden; padding-bottom: ($btnSize/30) + rem;
+				background: darken($baseColor,10%);
 
-            > .slider {
+			}
 
-                width: 999rem; /* avoid possible unwanted render effect */
-                
-                transition: all $transitionSpeed ease-in-out;
-            
-            }
-            
-        }
+			&.neactive {
 
-        > .jPanel { 
+				pointer-events: none; cursor: not-allowed; background: lighten($baseColor,50%);
 
-            display: block; position: absolute; top: 100%; left: 50%; 
-            margin-left: (-$btnSize/10) + rem; 
+			}
 
-        }
+		}
 
-        .prevBtn,
-        .nextBtn {
+		> .prevBtn {
 
-            float: left; display: inline-block; width: ($btnSize/10) + rem; height: ($btnSize/10) + rem; padding: 0; box-sizing: border-box;
-            background: $baseColor; text-indent: -9999rem; border: none; position: relative; overflow: hidden;
-            cursor: pointer; outline: none; transition: background 150ms ease-in-out; 
+			&:before {
 
-            &:before { 
+				border-right-color: #fff; margin-left: -8px;
 
-                content: ''; position: absolute; top: 50%; left: 50%; margin: -6px 0 0 -3px;
-                border: 6px solid transparent;
+			}
 
-            }
+		}
 
-            &:hover { 
+		> .nextBtn {
 
-                background: darken($baseColor,10%); 
+			&:before {
 
-            }
+				border-left-color: #fff;
 
-            &.neactive {
+			}
 
-                pointer-events: none; cursor: not-allowed; background: lighten($baseColor,50%);
+		}
 
-            }
-
-        }
-
-        .prevBtn {
-
-            &:before {
-
-                border-right-color: #fff; margin-left: -8px;
-
-            }
-
-        }
-
-        .nextBtn {
-
-            &:before {
-
-                border-left-color: #fff;
-                
-            }
-
-        }
-
-    }
+	}
 
 }

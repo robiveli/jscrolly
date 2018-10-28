@@ -1,10 +1,10 @@
-{ 
+{
 
     'use strict';
 
-    let jScrolly = function(options) {
+    function jScrolly (options) {
 
-        var defaults = {
+        let defaults = {
 
             buttonsClass: 'jPanel',
             buttonPrevClass: 'prevBtn',
@@ -12,8 +12,7 @@
             buttonNeactiveClass: 'neactive',
             buttonPrevText: 'Previous',
             buttonNextText: 'Next',
-
-            onRenderButtons: null,
+			transitionSpeed: '400',
             onFirstSlide: null,
             onSlide: null
 
@@ -46,22 +45,22 @@
         });
 
         return defaults;
-        
+
     }
 
     function simpleThrottle(callback, delay = 200) {
 
-        return function() { 
+        return function() {
 
             if (!this.throttled) {
 
                 this.throttled = true;
 
                 clearTimeout(timeoutInit);
-                var timeoutInit = setTimeout(() => { 
+                var timeoutInit = setTimeout(() => {
 
                     callback.apply(this, arguments);
-                    this.throttled = false; 
+                    this.throttled = false;
 
                 }, delay);
 
@@ -71,16 +70,15 @@
 
     }
 
-    function setPrefix(self) {
+    function setPrefix(prefixes, propertyName, self) {
 
-        var prefixes = ['transform', 'WebkitTransform', 'msTransform', 'MozTransform'],
-            testEl = document.createElement('div');
+        let testEl = document.createElement('div');
 
         prefixes.forEach((val) => {
 
-            if (testEl.style[val] !== undefined && !self.transformPrefixed) {
+            if (testEl.style[val] !== undefined && !self[propertyName]) {
 
-                self.transformPrefixed = val;
+                self[propertyName] = val;
 
             }
 
@@ -90,30 +88,13 @@
 
     function hasClass(el, className) {
 
-        if (el.classList) {
-
-            return el.classList.contains(className);
-
-        } else {
-
-            return new RegExp('(^| )' + className + '( |$)', 'gi').test(el.className);
-
-        }
+        return el.classList.contains(className);
 
     }
 
     function removeClass(el, className) {
 
-        if (el.classList) {
-
-            el.classList.remove(className);
-
-        }
-        else {
-
-            el.className = el.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
-        
-        }
+		el.classList.remove(className);
 
     }
 
@@ -121,11 +102,13 @@
 
         init() {
 
-            this.$el = document.getElementsByClassName('jScrolly');
+			this.$el = document.getElementsByClassName('jScrolly');
+			this.$jContent = this.$el[0].getElementsByClassName('jContent');
             this.$slider = this.$el[0].getElementsByClassName('slider');
             this.$items = this.$slider[0].childNodes;
 
-            setPrefix(this);
+			setPrefix(['transform', 'WebkitTransform', 'msTransform', 'MozTransform'], 'transformPrefixed', this);
+			setPrefix(['transition', 'WebkitTransition', 'oTransition', 'MozTransition'], 'transitionPrefixed', this);
 
             this.setupSlider();
             this.renderButtons();
@@ -138,12 +121,12 @@
             var itemsNum,
                 itemOffsetWidth,
                 offsetAll;
-               
+
             this.$items.forEach((item, index) => {
 
                 if (item.nodeType === Node.ELEMENT_NODE) {
 
-                    var style = window.getComputedStyle(item),
+                    let style = window.getComputedStyle(item),
                         marginLeft = parseInt(style.marginLeft),
                         marginRight = parseInt(style.marginRight);
 
@@ -156,7 +139,7 @@
 
             });
 
-            var sliderWidth = Number((itemsNum * itemOffsetWidth) + offsetAll),
+            let sliderWidth = Number((itemsNum * itemOffsetWidth) + offsetAll),
                 stepOffset = offsetAll / (itemsNum - 1);
 
             this.slideStep = itemOffsetWidth + stepOffset;
@@ -164,29 +147,31 @@
             this.maxSlidePrev = 0;
 
             this.$slider[0].style.width = sliderWidth + 'px';
-            this.$slider[0].style[this.transformPrefixed] = 'translateX(0px)';
+			this.$slider[0].style[this.transformPrefixed] = 'translateX(0px)';
+			this.$slider[0].style[this.transitionPrefixed] = `${this.options.transitionSpeed}ms`;
+			this.$jContent[0].style.overflow = 'hidden';
 
         },
 
         renderButtons() {
 
-            var jPanelTemplate = '<div class="' + this.options.buttonsClass + '">\
-                <button class="' + this.options.buttonPrevClass + ' ' + this.options.buttonNeactiveClass + '">' + this.options.buttonPrevText + '</button>\
-                <button class="' + this.options.buttonNextClass + '">' + this.options.buttonNextText + '</button>\
-            </div>';
+            this.$el[0].insertAdjacentHTML('beforeend', `<div class="${this.options.buttonsClass}">
+				<button class="${this.options.buttonPrevClass} ${this.options.buttonNeactiveClass}">
+					${this.options.buttonPrevText}
+				</button>
+				<button class="${this.options.buttonNextClass}">
+					${this.options.buttonNextText}
+				</button>
+			</div>`);
 
-            this.$el[0].insertAdjacentHTML('beforeend', jPanelTemplate);
+			this.$nextBtn = this.$el[0].getElementsByClassName(this.options.buttonNextClass);
+            this.$prevBtn = this.$el[0].getElementsByClassName(this.options.buttonPrevClass);
 
             this.eventsSetup();
-
-            this.options.onRenderButtons && this.options.onRenderButtons(this.$el[0].getElementsByClassName(this.options.buttonsClass));
 
         },
 
         eventsSetup() {
-
-            this.$nextBtn = this.$el[0].getElementsByClassName(this.options.buttonNextClass);
-            this.$prevBtn = this.$el[0].getElementsByClassName(this.options.buttonPrevClass);
 
             this.$nextBtn[0].addEventListener('click', () => this.moveNext());
             this.$prevBtn[0].addEventListener('click', () => this.movePrev());
@@ -198,16 +183,16 @@
             if (this.step > this.maxSlideNext) { return; }
 
             this.customCallbacks();
-            
+
             this.step = this.step ? (this.step + this.slideStep) : this.slideStep;
 
             if (this.step < this.maxSlideNext) {
-                
+
                 this.maxSlideNext > this.step ? this.animate(this.step) : this.animate(this.maxSlideNext);
 
                 this.$prevBtn[0].className = this.options.buttonPrevClass;
 
-            } else { 
+            } else {
 
                 this.animate(this.maxSlideNext);
                 this.setNeactiveBtn(this.$nextBtn[0]);
@@ -235,7 +220,7 @@
                 this.setNeactiveBtn(this.$prevBtn[0]);
 
             }
-            
+
         },
 
         setNeactiveBtn($btn) {
@@ -259,11 +244,9 @@
 
         rebuildListener() {
 
-            var $jContent = this.$el[0].getElementsByClassName('jContent')[0];
-            
             window.addEventListener('resize', simpleThrottle(() => {
 
-                $jContent.scrollLeft = 0;
+                this.$jContent[0].scrollLeft = 0;
                 this.step = 0;
 
                 this.setupSlider();
@@ -291,6 +274,4 @@
 
     }
 
-    window.jScrolly = jScrolly;
-
-}; 
+};

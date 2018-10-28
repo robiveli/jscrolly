@@ -1,13 +1,50 @@
 module.exports = function(grunt) {
 
+	const browsersList = grunt.file.readJSON('./package.json').browserslist;
+	const sass = require('node-sass');
+
     grunt.initConfig({
 
         settings: {
             srcPath: 'src/',
-            distPath: 'dist/'
+            distPath: 'dist/',
+            library: 'jScrolly'
+		},
+
+        babel: {
+            dist: {
+                files: {
+                    '<%= settings.distPath %>js/<%= settings.library %>.js': [
+                        '<%= settings.srcPath %>js/<%= settings.library %>.js'
+                    ]
+                }
+            }
         },
 
-        sass: {
+        uglify: {
+            minify: {
+                options: {
+                    beautify: false
+                },
+                files: {
+                    '<%= settings.distPath %>js/<%= settings.library %>.min.js': [
+                        '<%= settings.distPath %>js/<%= settings.library %>.js'
+                    ]
+                }
+            }
+        },
+
+        umd: {
+            all: {
+                options: {
+                    src: '<%= settings.distPath %>js/<%= settings.library %>.js',
+                    dest: '<%= settings.distPath %>js/<%= settings.library %>.js',
+                    objectToExport: '<%= settings.library %>',
+                }
+            }
+		},
+
+		sass: {
             app: {
                 files: [{
                     expand: true,
@@ -17,65 +54,50 @@ module.exports = function(grunt) {
                     ext: '.css'
                 }],
                 options: {
-                    outputStyle: 'compressed',
+					implementation: sass,
+                    outputStyle: 'expanded',
                     sourceMap: false,
                     precision: 5
                 }
             }
-        },
+		},
 
-        postcss: {
+		postcss: {
             options: {
-                map: false, 
+                map: false,
                 processors: [
-                    require('autoprefixer')({ browsers: 'last 8 versions' })
+                    require('autoprefixer')({
+						browsers: browsersList
+					})
                 ]
             },
             dist: {
-                files: [{
-                    expand: true,
-                    cwd: '<%= settings.srcPath %>sass/',
-                    src: ['*.js'],
-                    dest: '<%= settings.distPath %>css/'
-                }]
+                src: '<%= settings.distPath %>css/**/*.css'
             }
-        },
+		},
 
-        babel: {
-            options: {
-                presets: ['es2015']
-            },
-            dist: {
+		cssmin: {
+            target: {
                 files: [{
                     expand: true,
-                    cwd: '<%= settings.srcPath %>js/',
-                    src: ['*.js'],
-                    dest: '<%= settings.distPath %>js/'
-                }]
-            }
-        },
-
-        uglify: {
-            my_target: {
-                files: [{
-                    expand: true,
-                    cwd: '<%= settings.distPath %>js/',
-                    src: ['*.js'],
-                    dest: '<%= settings.distPath %>js/'
+                    cwd: '<%= settings.distPath %>css',
+                    src: ['*.css', '!*.min.css'],
+					dest: '<%= settings.distPath %>css',
+					ext: '.min.css'
                 }]
             }
         },
 
         htmlmin: {
-            dist: { 
-              options: {  
+            dist: {
+              options: {
                 removeComments: true,
                 collapseWhitespace: true
               },
               files: [{
-                    expand: true, 
-                    cwd: '<%= settings.srcPath %>', 
-                    src: ['**/*.html'], 
+                    expand: true,
+                    cwd: '<%= settings.srcPath %>',
+                    src: ['**/*.html'],
                     dest: '<%= settings.distPath %>'
                 }]
             }
@@ -84,16 +106,16 @@ module.exports = function(grunt) {
         watch: {
             javascript: {
                 expand: true,
-                files: ['<%= settings.srcPath %>js/**/*.js', 'Gruntfile.js'],
-                tasks: ['babel', 'uglify'],
+                files: ['<%= settings.srcPath %>js/**/*.js'],
+                tasks: ['babel', 'umd', 'uglify'],
                 options: {
                     spawn: false
                 }
-            },
-            css: {
+			},
+			scss: {
                 expand: true,
                 files: ['<%= settings.srcPath %>sass/**/*.scss'],
-                tasks: ['sass', 'postcss'],
+                tasks: ['sass', 'postcss', 'cssmin'],
                 options: {
                     spawn: false
                 }
@@ -112,6 +134,10 @@ module.exports = function(grunt) {
     require('load-grunt-tasks')(grunt);
 
     grunt.registerTask('default', ['watch']);
-    grunt.registerTask('build', ['sass', 'postcss', 'uglify', 'babel', 'htmlmin']);
+    grunt.registerTask('build', [
+		'babel', 'umd', 'uglify',
+		'sass', 'postcss', 'cssmin',
+		'htmlmin'
+	]);
 
 };

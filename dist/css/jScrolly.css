@@ -1,1 +1,56 @@
-.jScrolly{position:relative}.jScrolly>.jPanel{display:none}.jScrolly>.jContent{overflow-x:scroll;padding-bottom:0.5rem}@media screen and (min-width: 680px){.jScrolly>.jContent{overflow-x:hidden;padding-bottom:2rem}.jScrolly>.jContent>.slider{width:999rem;transition:all 400ms ease-in-out}.jScrolly>.jPanel{display:block;position:absolute;top:100%;left:50%;margin-left:-6rem}.jScrolly .prevBtn,.jScrolly .nextBtn{float:left;display:inline-block;width:6rem;height:6rem;padding:0;box-sizing:border-box;background:#3A3A3A;text-indent:-9999rem;border:none;position:relative;overflow:hidden;cursor:pointer;outline:none;transition:background 150ms ease-in-out}.jScrolly .prevBtn:before,.jScrolly .nextBtn:before{content:'';position:absolute;top:50%;left:50%;margin:-6px 0 0 -3px;border:6px solid transparent}.jScrolly .prevBtn:hover,.jScrolly .nextBtn:hover{background:#212121}.jScrolly .prevBtn.neactive,.jScrolly .nextBtn.neactive{pointer-events:none;cursor:not-allowed;background:#bababa}.jScrolly .prevBtn:before{border-right-color:#fff;margin-left:-8px}.jScrolly .nextBtn:before{border-left-color:#fff}}
+.jScrolly > .jPanel {
+  display: block;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -6rem;
+}
+
+.jScrolly > .jPanel > .prevBtn,
+.jScrolly > .jPanel > .nextBtn {
+  float: left;
+  display: inline-block;
+  width: 6rem;
+  height: 6rem;
+  padding: 0;
+  box-sizing: border-box;
+  background: #3A3A3A;
+  text-indent: -9999rem;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  outline: none;
+  transition: background 150ms ease-in-out;
+}
+
+.jScrolly > .jPanel > .prevBtn:before,
+.jScrolly > .jPanel > .nextBtn:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -6px 0 0 -3px;
+  border: 6px solid transparent;
+}
+
+.jScrolly > .jPanel > .prevBtn:hover,
+.jScrolly > .jPanel > .nextBtn:hover {
+  background: #212121;
+}
+
+.jScrolly > .jPanel > .prevBtn.neactive,
+.jScrolly > .jPanel > .nextBtn.neactive {
+  pointer-events: none;
+  cursor: not-allowed;
+  background: #bababa;
+}
+
+.jScrolly > .jPanel > .prevBtn:before {
+  border-right-color: #fff;
+  margin-left: -8px;
+}
+
+.jScrolly > .jPanel > .nextBtn:before {
+  border-left-color: #fff;
+}
